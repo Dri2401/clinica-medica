@@ -15,4 +15,6 @@ public class MedicoModel {
     private String nome;
 
     private String crm;
+
+    private String senha;
 }
