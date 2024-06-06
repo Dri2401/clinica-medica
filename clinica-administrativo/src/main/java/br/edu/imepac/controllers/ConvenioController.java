@@ -3,6 +3,8 @@ package br.edu.imepac.controllers;
 import br.edu.imepac.dtos.ConvenioDtoRequest;
 import br.edu.imepac.dtos.ConvenioDtoResponse;
 import br.edu.imepac.services.ConvenioService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,12 @@ public class ConvenioController {
     @Autowired
     private ConvenioService convenioService;
 
+    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(ConvenioController.class);
+
     @PostMapping
     public ResponseEntity<ConvenioDtoResponse> saveConvenio(@RequestBody ConvenioDtoRequest convenioDtoRequest) {
+        logger.info("Request ConvenioCreateRequest ");
         ConvenioDtoResponse saveConvenio = convenioService.save(convenioDtoRequest);
         return new ResponseEntity<>(saveConvenio, HttpStatus.CREATED);
     }

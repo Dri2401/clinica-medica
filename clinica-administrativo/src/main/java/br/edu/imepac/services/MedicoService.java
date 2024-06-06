@@ -6,16 +6,21 @@ import br.edu.imepac.models.MedicoModel;
 import br.edu.imepac.repositories.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.modelmapper.ModelMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class MedicoService {
-
-    @Autowired
     private MedicoRepository medicoRepository;
+
+    private ModelMapper modelMapper;
+
+    public MedicoService(MedicoRepository medicoRepository, ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+        this.medicoRepository = medicoRepository;
+    }
 
     public void delete(Long id) {
         medicoRepository.deleteById(id);
@@ -54,18 +59,9 @@ public class MedicoService {
     }
 
     public MedicoDtoResponse save(MedicoDtoRequest medicoRequest) {
-        MedicoModel medicoModel = new MedicoModel();
-        medicoModel.setNome(medicoRequest.getNome());
-        medicoModel.setCrm(medicoRequest.getCrm());
-        medicoModel.setSenha(medicoRequest.getSenha());
-
+        MedicoModel medicoModel = modelMapper.map(medicoRequest, MedicoModel.class);
         MedicoModel savedMedico = medicoRepository.save(medicoModel);
-
-        MedicoDtoResponse medicoDto = new MedicoDtoResponse();
-        medicoDto.setId(savedMedico.getId());
-        medicoDto.setNome(savedMedico.getNome());
-        medicoDto.setCrm(savedMedico.getCrm());
-
+        MedicoDtoResponse medicoDto = modelMapper.map(savedMedico, MedicoDtoResponse.class);
         return medicoDto;
     }
 

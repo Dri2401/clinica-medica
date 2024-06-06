@@ -4,6 +4,8 @@ import br.edu.imepac.dtos.MedicoDtoResponse;
 import br.edu.imepac.dtos.MedicoDtoRequest;
 import br.edu.imepac.dtos.MedicoDtoResponse;
 import br.edu.imepac.services.MedicoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,13 @@ public class MedicoController {
     @Autowired
     private MedicoService medicoService;
 
+    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(MedicoController.class);
+
 
     @PostMapping
     public ResponseEntity<MedicoDtoResponse> saveDoctor(@RequestBody MedicoDtoRequest medicoCreateRequest) {
+        logger.info("Request MedicoCreateRequest ");
         MedicoDtoResponse savedMedico = medicoService.save(medicoCreateRequest);
         return new ResponseEntity<>(savedMedico, HttpStatus.CREATED);
     }

@@ -2,8 +2,11 @@ package br.edu.imepac.services;
 
 import br.edu.imepac.dtos.EspecialidadeDtoRequest;
 import br.edu.imepac.dtos.EspecialidadeDtoResponse;
+import br.edu.imepac.dtos.MedicoDtoResponse;
 import br.edu.imepac.models.EspecialidadeModel;
+import br.edu.imepac.models.MedicoModel;
 import br.edu.imepac.repositories.EspecialidadeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +46,10 @@ public class EspecialidadeService {
     }
 
     public EspecialidadeDtoResponse save(EspecialidadeDtoRequest dtoRequest) {
-        EspecialidadeModel especialidadeModel = new EspecialidadeModel();
-        especialidadeModel.setNome(dtoRequest.getNome());
-        especialidadeModel = repo.save(especialidadeModel);
-        EspecialidadeDtoResponse dto2 = new EspecialidadeDtoResponse();
-        dto2.setId(especialidadeModel.getId());
-        dto2.setNome(especialidadeModel.getNome());
-        return dto2;
+        EspecialidadeModel especialidadeModel = modelMapper.map(EspecialidadeDtoRequest, EspecialidadeModel.class);
+        EspecialidadeModel savedEspecialidade = especialidadeRepository.save(especialidadeModel);
+        EspecialidadeDtoResponse especialidadeDto = modelMapper.map(savedMedico, MedicoDtoResponse.class);
+        return especialidadeDto;
     }
 
     public EspecialidadeDtoResponse getById(Long id) {

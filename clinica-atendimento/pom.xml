@@ -20,6 +20,11 @@
             <artifactId>hibernate-core</artifactId>
             <type>pom</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
         <!-- Outras dependências do projeto -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
