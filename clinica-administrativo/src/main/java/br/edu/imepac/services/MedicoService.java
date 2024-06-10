@@ -28,13 +28,9 @@ public class MedicoService {
 
     public List<MedicoDtoResponse> findAll() {
         List<MedicoModel> medicos = medicoRepository.findAll();
-        return medicos.stream().map(medico -> {
-            MedicoDtoResponse medicoDto = new MedicoDtoResponse();
-            medicoDto.setId(medico.getId());
-            medicoDto.setNome(medico.getNome());
-            medicoDto.setCrm(medico.getCrm());
-            return medicoDto;
-        }).collect(Collectors.toList());
+        return medicos.stream()
+                .map(medico -> modelMapper.map(medico, MedicoDtoResponse.class))
+                .collect(Collectors.toList());
     }
 
     public MedicoDtoResponse update(Long id, MedicoDtoResponse medicoDetails) {
@@ -46,12 +42,7 @@ public class MedicoService {
             medicoModel.setCrm(medicoDetails.getCrm());
 
             MedicoModel updatedMedico = medicoRepository.save(medicoModel);
-
-            MedicoDtoResponse medicoDto = new MedicoDtoResponse();
-            medicoDto.setId(updatedMedico.getId());
-            medicoDto.setNome(updatedMedico.getNome());
-            medicoDto.setCrm(updatedMedico.getCrm());
-
+            MedicoDtoResponse medicoDto = modelMapper.map(updatedMedico, MedicoDtoResponse.class);
             return medicoDto;
         } else {
             return null;
@@ -69,10 +60,7 @@ public class MedicoService {
         Optional<MedicoModel> optionalMedico = medicoRepository.findById(id);
         if (optionalMedico.isPresent()) {
             MedicoModel medicoModel = optionalMedico.get();
-            MedicoDtoResponse medicoDto = new MedicoDtoResponse();
-            medicoDto.setId(medicoModel.getId());
-            medicoDto.setNome(medicoModel.getNome());
-            medicoDto.setCrm(medicoModel.getCrm());
+            MedicoDtoResponse medicoDto = modelMapper.map(medicoModel, MedicoDtoResponse.class);
             return medicoDto;
         } else {
             return null;

@@ -31,6 +31,7 @@ public class ConvenioController {
 
     @GetMapping
     public ResponseEntity<List<ConvenioDtoResponse>> getAllConvenio() {
+        logger.info("Request ConvenioGetAllRequest ");
         List<ConvenioDtoResponse> convenios = convenioService.findAll();
         return new ResponseEntity<>(convenios, HttpStatus.OK);
     }
@@ -40,6 +41,7 @@ public class ConvenioController {
     public ResponseEntity<ConvenioDtoResponse> getConvenioById(@PathVariable Long id) {
         ConvenioDtoResponse convenio = convenioService.getById(id);
         if(convenio != null) {
+            logger.info("Request ConvenioFindByIdRequest ");
             return new ResponseEntity<>(convenio, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,6 +51,7 @@ public class ConvenioController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ConvenioDtoResponse> updateConvenio(@PathVariable Long id, @RequestBody ConvenioDtoResponse convenioDtoResponse) {
+        logger.info("Request ConvenioUpdateRequest ");
         ConvenioDtoResponse updateConvenio = convenioService.update(id, convenioDtoResponse);
         if(updateConvenio != null) {
             return new ResponseEntity<>(updateConvenio, HttpStatus.OK);
@@ -59,6 +62,7 @@ public class ConvenioController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteConvenio(@PathVariable Long id) {
+        logger.info("Request ConvenioDeleteRequest ");
         convenioService.delete(id);
     }
 }
