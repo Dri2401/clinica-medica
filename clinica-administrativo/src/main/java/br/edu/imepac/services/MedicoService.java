@@ -1,7 +1,7 @@
 package br.edu.imepac.services;
 
-import br.edu.imepac.dtos.MedicoDtoRequest;
-import br.edu.imepac.dtos.MedicoDtoResponse;
+import br.edu.imepac.dtos.Medico.MedicoDtoRequest;
+import br.edu.imepac.dtos.Medico.MedicoDtoResponse;
 import br.edu.imepac.models.MedicoModel;
 import br.edu.imepac.repositories.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class MedicoService {
                 .collect(Collectors.toList());
     }
 
-    public MedicoDtoResponse update(Long id, MedicoDtoResponse medicoDetails) {
+    public MedicoDtoResponse update(Long id, MedicoDtoRequest medicoDetails) {
         Optional<MedicoModel> optionalMedico = medicoRepository.findById(id);
 
         if (optionalMedico.isPresent()) {

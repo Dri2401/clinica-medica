@@ -1,7 +1,7 @@
 package br.edu.imepac.services;
 
-import br.edu.imepac.dtos.EspecialidadeDtoRequest;
-import br.edu.imepac.dtos.EspecialidadeDtoResponse;
+import br.edu.imepac.dtos.Especialidade.EspecialidadeDtoRequest;
+import br.edu.imepac.dtos.Especialidade.EspecialidadeDtoResponse;
 import br.edu.imepac.models.EspecialidadeModel;
 import br.edu.imepac.repositories.EspecialidadeRepository;
 import org.modelmapper.ModelMapper;

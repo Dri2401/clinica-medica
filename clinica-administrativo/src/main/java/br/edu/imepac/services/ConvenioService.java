@@ -1,7 +1,7 @@
 package br.edu.imepac.services;
 
-import br.edu.imepac.dtos.ConvenioDtoRequest;
-import br.edu.imepac.dtos.ConvenioDtoResponse;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoRequest;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoResponse;
 import br.edu.imepac.models.ConvenioModel;
 import br.edu.imepac.repositories.ConvenioRepository;
 import org.modelmapper.ModelMapper;

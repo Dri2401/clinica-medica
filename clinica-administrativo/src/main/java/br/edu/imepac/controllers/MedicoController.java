@@ -1,8 +1,7 @@
 package br.edu.imepac.controllers;
 
-import br.edu.imepac.dtos.MedicoDtoResponse;
-import br.edu.imepac.dtos.MedicoDtoRequest;
-import br.edu.imepac.dtos.MedicoDtoResponse;
+import br.edu.imepac.dtos.Medico.MedicoDtoRequest;
+import br.edu.imepac.dtos.Medico.MedicoDtoResponse;
 import br.edu.imepac.services.MedicoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,7 @@ public class MedicoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<MedicoDtoResponse> updateDoctor(@PathVariable Long id, @RequestBody MedicoDtoResponse medicoDetails) {
+    public ResponseEntity<MedicoDtoResponse> updateDoctor(@PathVariable Long id, @RequestBody MedicoDtoRequest medicoDetails) {
         MedicoDtoResponse updatedMedico = medicoService.update(id, medicoDetails);
         if (updatedMedico != null) {
             logger.info("Request MedicoUpdate");

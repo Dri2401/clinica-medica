@@ -7,6 +7,10 @@
   <packaging>pom</packaging>
   <name>Archetype - clinica-medica</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
   <modules>
     <module>clinica-administrativo</module>
     <module>clinica-agendamento</module>

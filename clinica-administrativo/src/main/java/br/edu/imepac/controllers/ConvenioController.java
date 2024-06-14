@@ -1,7 +1,7 @@
 package br.edu.imepac.controllers;
 
-import br.edu.imepac.dtos.ConvenioDtoRequest;
-import br.edu.imepac.dtos.ConvenioDtoResponse;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoRequest;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoResponse;
 import br.edu.imepac.services.ConvenioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

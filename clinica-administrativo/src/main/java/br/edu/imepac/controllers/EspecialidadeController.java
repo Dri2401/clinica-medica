@@ -1,8 +1,8 @@
 package br.edu.imepac.controllers;
 
 
-import br.edu.imepac.dtos.EspecialidadeDtoRequest;
-import br.edu.imepac.dtos.EspecialidadeDtoResponse;
+import br.edu.imepac.dtos.Especialidade.EspecialidadeDtoRequest;
+import br.edu.imepac.dtos.Especialidade.EspecialidadeDtoResponse;
 import br.edu.imepac.services.EspecialidadeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
