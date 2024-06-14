@@ -38,7 +38,7 @@ public class MedicoController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<MedicoDtoResponse> getDoctorById(@PathVariable Long id) {
+    public ResponseEntity<MedicoDtoResponse> getDoctorById(@PathVariable("id") Long id) {
         MedicoDtoResponse medicoDto = medicoService.findById(id);
         if (medicoDto != null) {
             logger.info("Request MedicoGetDoctorById");
@@ -50,7 +50,7 @@ public class MedicoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<MedicoDtoResponse> updateDoctor(@PathVariable Long id, @RequestBody MedicoDtoRequest medicoDetails) {
+    public ResponseEntity<MedicoDtoResponse> updateDoctor(@PathVariable("id") Long id, @RequestBody MedicoDtoRequest medicoDetails) {
         MedicoDtoResponse updatedMedico = medicoService.update(id, medicoDetails);
         if (updatedMedico != null) {
             logger.info("Request MedicoUpdate");
@@ -62,8 +62,8 @@ public class MedicoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteDoctor(@PathVariable Long id) {
+    public ResponseEntity<String> deleteDoctor(@PathVariable("id") Long id) {
         logger.info("Request MedicoDelete");
-        medicoService.delete(id);
+        return medicoService.delete(id);
     }
 }

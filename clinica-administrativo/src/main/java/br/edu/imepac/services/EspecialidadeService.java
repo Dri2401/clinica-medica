@@ -6,6 +6,7 @@ import br.edu.imepac.models.EspecialidadeModel;
 import br.edu.imepac.repositories.EspecialidadeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,9 @@ public class EspecialidadeService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void delete(Long id) {
+    public ResponseEntity<String> delete(Long id) {
         repo.deleteById(id);
+        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<EspecialidadeDtoResponse> findAll() {

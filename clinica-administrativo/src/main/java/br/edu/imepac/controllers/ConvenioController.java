@@ -38,7 +38,7 @@ public class ConvenioController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ConvenioDtoResponse> getConvenioById(@PathVariable Long id) {
+    public ResponseEntity<ConvenioDtoResponse> getConvenioById(@PathVariable("id") Long id) {
         ConvenioDtoResponse convenio = convenioService.getById(id);
         if(convenio != null) {
             logger.info("Request ConvenioFindByIdRequest ");
@@ -50,7 +50,7 @@ public class ConvenioController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ConvenioDtoResponse> updateConvenio(@PathVariable Long id, @RequestBody ConvenioDtoResponse convenioDtoResponse) {
+    public ResponseEntity<ConvenioDtoResponse> updateConvenio(@PathVariable("id") Long id, @RequestBody ConvenioDtoResponse convenioDtoResponse) {
         logger.info("Request ConvenioUpdateRequest ");
         ConvenioDtoResponse updateConvenio = convenioService.update(id, convenioDtoResponse);
         if(updateConvenio != null) {
@@ -61,8 +61,8 @@ public class ConvenioController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteConvenio(@PathVariable Long id) {
+    public ResponseEntity<String> deleteConvenio(@PathVariable("id") Long id) {
         logger.info("Request ConvenioDeleteRequest ");
-        convenioService.delete(id);
+        return convenioService.delete(id);
     }
 }

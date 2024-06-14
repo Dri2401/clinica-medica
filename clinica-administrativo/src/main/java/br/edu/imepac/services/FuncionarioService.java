@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.edu.imepac.dtos.Funcionarios.FuncionarioDtoRequest;
@@ -26,9 +27,10 @@ public class FuncionarioService {
     @Autowired
     private static final Logger logger = LoggerFactory.getLogger(FuncionarioService.class);
 
-    public void delete(Long id){
+    public ResponseEntity<String> delete(Long id){
         logger.info("Delete Funcionario Service");
         funcionarioRepository.deleteById(id);
+        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<FuncionarioDtoResponse> findAll(){
@@ -44,8 +46,8 @@ public class FuncionarioService {
         Optional<FuncionarioModel> optionalFuncionario = funcionarioRepository.findById(id);
         if(optionalFuncionario.isPresent()){
             FuncionarioModel funcionario = optionalFuncionario.get();
-            funcionario.setNome(funcionarioDetails.getNome());
-            funcionario.setCargo(funcionarioDetails.getCargo());
+            Optional.ofNullable(funcionarioDetails.getNome()).ifPresent(funcionario::setNome);
+            Optional.ofNullable(funcionarioDetails.getCargo()).ifPresent(funcionario::setCargo);
 
             FuncionarioModel updated = funcionarioRepository.save(funcionario);
             FuncionarioDtoResponse dto = modelMapper.map(updated, FuncionarioDtoResponse.class);
