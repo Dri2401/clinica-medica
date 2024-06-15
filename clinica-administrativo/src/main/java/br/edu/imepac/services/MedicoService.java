@@ -4,7 +4,6 @@ import br.edu.imepac.dtos.Medico.MedicoDtoRequest;
 import br.edu.imepac.dtos.Medico.MedicoDtoResponse;
 import br.edu.imepac.models.MedicoModel;
 import br.edu.imepac.repositories.MedicoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;

@@ -1,12 +1,15 @@
 package br.edu.imepac.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.ValueGenerationType;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "funcionarios")
+@AllArgsConstructor
+@NoArgsConstructor
 public class FuncionarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
