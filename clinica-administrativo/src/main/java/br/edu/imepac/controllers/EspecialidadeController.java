@@ -20,7 +20,6 @@ public class EspecialidadeController {
     @Autowired
     private EspecialidadeService especialidadeService;
 
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(EspecialidadeController.class);
 
 
@@ -62,8 +61,8 @@ public class EspecialidadeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteEspecialidade(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteEspecialidade(@PathVariable("id") Long id) {
         logger.info("Request deleteEspecialidade ");
-        especialidadeService.delete(id);
+        return especialidadeService.delete(id);
     }
 }

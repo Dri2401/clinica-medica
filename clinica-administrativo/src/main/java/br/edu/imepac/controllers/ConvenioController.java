@@ -19,7 +19,6 @@ public class ConvenioController {
     @Autowired
     private ConvenioService convenioService;
 
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(ConvenioController.class);
 
     @PostMapping

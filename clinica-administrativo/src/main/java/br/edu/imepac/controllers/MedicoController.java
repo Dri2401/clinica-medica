@@ -18,7 +18,6 @@ public class MedicoController {
     @Autowired
     private MedicoService medicoService;
 
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(MedicoController.class);
 
 

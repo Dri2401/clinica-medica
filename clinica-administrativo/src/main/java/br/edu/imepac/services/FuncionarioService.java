@@ -1,5 +1,6 @@
 package br.edu.imepac.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,6 @@ public class FuncionarioService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(FuncionarioService.class);
 
     public ResponseEntity<String> delete(Long id){
@@ -36,9 +36,12 @@ public class FuncionarioService {
     public List<FuncionarioDtoResponse> findAll(){
         logger.info("Find all Funcionario Service");
         List<FuncionarioModel> funcionario = funcionarioRepository.findAll();
-        @SuppressWarnings("unchecked")
-        List<FuncionarioDtoResponse> dto = (List<FuncionarioDtoResponse>) modelMapper.map(funcionario, FuncionarioDtoResponse.class);
-        return dto;
+        List<FuncionarioDtoResponse> dtoList = new ArrayList<>();
+        for(FuncionarioModel func : funcionario){
+            FuncionarioDtoResponse dto = modelMapper.map(func, FuncionarioDtoResponse.class);
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
     public FuncionarioDtoResponse update(Long id, FuncionarioDtoRequest funcionarioDetails){
@@ -46,9 +49,16 @@ public class FuncionarioService {
         Optional<FuncionarioModel> optionalFuncionario = funcionarioRepository.findById(id);
         if(optionalFuncionario.isPresent()){
             FuncionarioModel funcionario = optionalFuncionario.get();
+            logger.info("Original Nome: " + funcionario.getNome());
+            logger.info("Original Cargo: " + funcionario.getCargo());
+
+            logger.info("New Nome: " + funcionarioDetails.getNome());
+            logger.info("New Cargo: " + funcionarioDetails.getCargo());
             Optional.ofNullable(funcionarioDetails.getNome()).ifPresent(funcionario::setNome);
             Optional.ofNullable(funcionarioDetails.getCargo()).ifPresent(funcionario::setCargo);
 
+            logger.info("Updated Nome: " + funcionario.getNome());
+            logger.info("Updated Cargo: "+ funcionario.getCargo());
             FuncionarioModel updated = funcionarioRepository.save(funcionario);
             FuncionarioDtoResponse dto = modelMapper.map(updated, FuncionarioDtoResponse.class);
             return dto;

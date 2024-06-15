@@ -33,7 +33,6 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
-    @Autowired
     private static final Logger logger = LoggerFactory.getLogger(FuncionarioController.class);
 
     @PostMapping
@@ -65,7 +64,7 @@ public class FuncionarioController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<FuncionarioDtoResponse> updateFuncionario(@PathVariable("id") Long id, FuncionarioDtoRequest funcionarioDetails){
+    public ResponseEntity<FuncionarioDtoResponse> updateFuncionario(@PathVariable("id") Long id, @RequestBody FuncionarioDtoRequest funcionarioDetails){
         logger.info("Update Funcionario");
         FuncionarioDtoResponse dto = funcionarioService.update(id, funcionarioDetails);
         if(dto != null){
@@ -78,9 +77,9 @@ public class FuncionarioController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteFuncionario(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteFuncionario(@PathVariable("id") Long id) {
         logger.info("Delete funcionario ");
-        funcionarioService.delete(id);
+        return funcionarioService.delete(id);
     }
     
     
