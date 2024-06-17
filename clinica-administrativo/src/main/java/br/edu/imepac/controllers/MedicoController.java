@@ -55,7 +55,7 @@ public class MedicoController {
             logger.info("Request MedicoUpdate");
             return new ResponseEntity<>(updatedMedico, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
     }
 
