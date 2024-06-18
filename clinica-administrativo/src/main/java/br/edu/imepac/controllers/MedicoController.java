@@ -2,7 +2,6 @@ package br.edu.imepac.controllers;
 
 import br.edu.imepac.dtos.Medico.MedicoDtoRequest;
 import br.edu.imepac.dtos.Medico.MedicoDtoResponse;
-import br.edu.imepac.services.EspecialidadeService;
 import br.edu.imepac.services.MedicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
