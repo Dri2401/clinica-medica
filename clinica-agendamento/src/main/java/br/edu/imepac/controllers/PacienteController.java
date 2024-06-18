@@ -26,7 +26,7 @@ public class PacienteController {
     @Autowired
     private PacienteService pacienteService;
 
-    private static final Logger logger = LoggerFactory.getLogger(FuncionarioController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PacienteController.class);
 
     @PostMapping
     public ResponseEntity<PacienteDtoResponse> savePaciente(@RequestBody PacienteDtoRequest pacienteDetails){

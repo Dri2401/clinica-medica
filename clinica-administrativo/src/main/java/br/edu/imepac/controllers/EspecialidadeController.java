@@ -79,8 +79,8 @@ public class EspecialidadeController {
     })
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EspecialidadeDtoResponse> updateEspecialidade(@PathVariable("id") Long id, @RequestBody EspecialidadeDtoResponse especialidadeDtoResponse) {
-        EspecialidadeDtoResponse dto = especialidadeService.update(id, especialidadeDtoResponse);
+    public ResponseEntity<EspecialidadeDtoResponse> updateEspecialidade(@PathVariable("id") Long id, @RequestBody EspecialidadeDtoRequest especialidadeDtoRequest) {
+        EspecialidadeDtoResponse dto = especialidadeService.update(id, especialidadeDtoRequest);
         if (dto != null) {
             logger.info("Request EspecialidadeCrateRequest ");
             return new ResponseEntity<>(dto, HttpStatus.OK);

@@ -29,7 +29,7 @@ public class ConvenioService {
     public ResponseEntity<String> delete(Long id) {
         logger.info("Convenio Service Deleting convenio");
         repository.deleteById(id);
-        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
+        return ResponseEntity.ok().body("{\"mensagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<ConvenioDtoResponse> findAll() {

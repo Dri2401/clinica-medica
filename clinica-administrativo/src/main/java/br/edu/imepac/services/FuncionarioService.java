@@ -30,7 +30,7 @@ public class FuncionarioService {
     public ResponseEntity<String> delete(Long id){
         logger.info("Delete Funcionario Service");
         funcionarioRepository.deleteById(id);
-        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
+        return ResponseEntity.ok().body("{\"mensagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<FuncionarioDtoResponse> findAll(){

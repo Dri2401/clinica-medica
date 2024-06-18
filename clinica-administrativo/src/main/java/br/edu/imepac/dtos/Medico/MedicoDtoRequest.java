@@ -7,4 +7,5 @@ public class MedicoDtoRequest {
     private String nome;
     private String crm;
     private String senha;
+    private Long especialidadeId;
 }

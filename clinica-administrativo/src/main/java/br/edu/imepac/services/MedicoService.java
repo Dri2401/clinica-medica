@@ -2,7 +2,9 @@ package br.edu.imepac.services;
 
 import br.edu.imepac.dtos.Medico.MedicoDtoRequest;
 import br.edu.imepac.dtos.Medico.MedicoDtoResponse;
+import br.edu.imepac.models.EspecialidadeModel;
 import br.edu.imepac.models.MedicoModel;
+import br.edu.imepac.repositories.EspecialidadeRepository;
 import br.edu.imepac.repositories.MedicoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,22 @@ import java.util.stream.Collectors;
 public class MedicoService {
     private MedicoRepository medicoRepository;
 
+    private EspecialidadeRepository especialidadeRepository;
+
     private ModelMapper modelMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(MedicoService.class);
 
-    public MedicoService(MedicoRepository medicoRepository, ModelMapper modelMapper) {
+    public MedicoService(MedicoRepository medicoRepository, ModelMapper modelMapper, EspecialidadeRepository especialidadeRepository) {
         this.modelMapper = modelMapper;
         this.medicoRepository = medicoRepository;
+        this.especialidadeRepository = especialidadeRepository;
     }
 
     public ResponseEntity<String> delete(Long id) {
         logger.info("Medico Service deleting Medico");
         medicoRepository.deleteById(id);
-        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
+        return ResponseEntity.ok().body("{\"mensagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<MedicoDtoResponse> findAll() {
@@ -64,10 +69,20 @@ public class MedicoService {
 
     public MedicoDtoResponse save(MedicoDtoRequest medicoRequest) {
         MedicoModel medicoModel = modelMapper.map(medicoRequest, MedicoModel.class);
-        logger.info("Medico Service Save Medico");
-        MedicoModel savedMedico = medicoRepository.save(medicoModel);
-        MedicoDtoResponse medicoDto = modelMapper.map(savedMedico, MedicoDtoResponse.class);
-        return medicoDto;
+        Optional<EspecialidadeModel> optionalEspecialidade = especialidadeRepository.findById(medicoRequest.getEspecialidadeId());
+        if(optionalEspecialidade.isPresent()){
+            logger.info("Medico Service Save Medico");
+            EspecialidadeModel especialidade = optionalEspecialidade.get();
+            medicoModel.setEspecialidade(especialidade);
+            MedicoModel savedMedico = medicoRepository.save(medicoModel);
+            MedicoDtoResponse medicoDto = modelMapper.map(savedMedico, MedicoDtoResponse.class);
+            medicoDto.setEspecialidadeNome(savedMedico.getEspecialidade().getNome());
+            return medicoDto;
+        } else {
+            logger.error("Medico Service Error Creating Medico");
+            return null;
+        }
+        
     }
 
     public MedicoDtoResponse findById(Long id) {

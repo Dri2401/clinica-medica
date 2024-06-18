@@ -11,20 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.google.protobuf.Option;
+
 import br.edu.imepac.dtos.paciente.PacienteDtoRequest;
 import br.edu.imepac.dtos.paciente.PacienteDtoResponse;
-import br.edu.imepac.models.ConvenioModel;
-import br.edu.imepac.models.PacienteModel;
-import br.edu.imepac.repositories.ConvenioRepository;
+import br.edu.imepac.model.PacienteModel;
 import br.edu.imepac.repositories.PacienteRepository;
 
 @Service
 public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
-
-    @Autowired
-    private ConvenioRepository convenioRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -40,11 +37,6 @@ public class PacienteService {
     public PacienteDtoResponse save(PacienteDtoRequest pacienteDetails){
         logger.info("Paciente Service save Paciente");
         PacienteModel paciente = modelMapper.map(pacienteDetails, PacienteModel.class);
-        if (pacienteDetails.getConvenio() != null) {
-            ConvenioModel convenio = convenioRepository.findById(pacienteDetails.getConvenio())
-                .orElseThrow(() -> new IllegalArgumentException("Convênio não encontrado: " + pacienteDetails.getConvenio()));
-            paciente.setConvenio(convenio);
-        }
         PacienteModel pacienteSaved = pacienteRepository.save(paciente);
         PacienteDtoResponse dto = modelMapper.map(pacienteSaved, PacienteDtoResponse.class);
         return dto;
@@ -67,13 +59,7 @@ public class PacienteService {
             PacienteModel pacienteModel = optionalPaciente.get();
             Optional.ofNullable(pacienteDetails.getNome()).ifPresent(pacienteModel::setNome);
             Optional.ofNullable(pacienteDetails.getCpf()).ifPresent(pacienteModel::setCpf);
-            if (pacienteDetails.getConvenio() != null) {
-                ConvenioModel convenio = convenioRepository.findById(pacienteDetails.getConvenio())
-                    .orElseThrow(() -> new IllegalArgumentException("Convênio não encontrado: " + pacienteDetails.getConvenio()));
-                pacienteModel.setConvenio(convenio);
-            } else {
-                pacienteModel.setConvenio(null); // Limpar o convênio se convenioId for null
-            }
+            Optional.ofNullable(pacienteDetails.getConvenioId()).ifPresent(pacienteModel::setConvenioId);
             logger.info("Paciente Service Start Update Paciente");
             PacienteModel updatedPaciente = pacienteRepository.save(pacienteModel);
             logger.info("Updated Paciente");

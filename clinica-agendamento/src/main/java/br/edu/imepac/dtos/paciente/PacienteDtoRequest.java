@@ -6,5 +6,5 @@ import lombok.Data;
 public class PacienteDtoRequest {
     private String nome;
     private String cpf;
-    private Long convenio;
+    private Long convenioId;
 }

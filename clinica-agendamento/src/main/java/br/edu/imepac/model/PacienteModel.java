@@ -1,4 +1,4 @@
-package br.edu.imepac.models;
+package br.edu.imepac.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +24,5 @@ public class PacienteModel {
 
     private String cpf;
 
-    @ManyToOne
-    private ConvenioModel convenio;
+    private Long convenioId;
 }

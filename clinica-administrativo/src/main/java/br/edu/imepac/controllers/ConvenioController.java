@@ -43,7 +43,7 @@ public class ConvenioController {
     
     @Operation(summary = "Retorna todos os convênios cadastrados!", method = "GET")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Request feita com sucesso"),
+        @ApiResponse(responseCode = "200", description = "Busca feita com sucesso"),
         @ApiResponse(responseCode = "500", description = "Erro interno")
     })
     @GetMapping
@@ -71,7 +71,7 @@ public class ConvenioController {
         }
     }
 
-    @Operation(summary = "Atualiza um convênio", method = "PUT")
+    @Operation(summary = "Atualiza os dados de um convênio", method = "PUT")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Convênio atualizado com sucesso"),
         @ApiResponse(responseCode = "404", description = "Convênio não encontrado"),

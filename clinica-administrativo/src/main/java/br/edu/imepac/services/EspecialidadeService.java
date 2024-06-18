@@ -29,7 +29,7 @@ public class EspecialidadeService {
     public ResponseEntity<String> delete(Long id) {
         logger.info("Especialidade Service Deleting Especialidade");
         repo.deleteById(id);
-        return ResponseEntity.ok().body("{\"messagem\": \"Excluido com sucesso!\"}");
+        return ResponseEntity.ok().body("{\"mensagem\": \"Excluido com sucesso!\"}");
     }
 
     public List<EspecialidadeDtoResponse> findAll() {
@@ -40,7 +40,7 @@ public class EspecialidadeService {
                 .collect(Collectors.toList());
     }
 
-    public EspecialidadeDtoResponse update(Long id, EspecialidadeDtoResponse dto) {
+    public EspecialidadeDtoResponse update(Long id, EspecialidadeDtoRequest dto) {
         logger.info("Especialidade Service Updating Especialidade");
         Optional<EspecialidadeModel> especialidade = repo.findById(id);
         if (especialidade.isPresent()) {
