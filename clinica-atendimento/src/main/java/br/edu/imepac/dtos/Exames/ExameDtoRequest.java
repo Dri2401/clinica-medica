@@ -7,5 +7,5 @@ public class ExameDtoRequest {
     
     private String tipoExame;
 
-    private Long medicoSolicitante;  
+    private Long medicoSolicitante;
 }
