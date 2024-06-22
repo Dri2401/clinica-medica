@@ -1,10 +1,14 @@
 package br.edu.imepac.services;
 
-import br.edu.imepac.dtos.ConvenioDtoRequest;
-import br.edu.imepac.dtos.ConvenioDtoResponse;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoRequest;
+import br.edu.imepac.dtos.Convenio.ConvenioDtoResponse;
 import br.edu.imepac.models.ConvenioModel;
 import br.edu.imepac.repositories.ConvenioRepository;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,53 +17,57 @@ import java.util.stream.Collectors;
 
 @Service
 public class ConvenioService {
+
     @Autowired
     private ConvenioRepository repository;
 
-    public void delete(Long id) { repository.deleteById(id); }
+    @Autowired
+    private ModelMapper modelMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(ConvenioService.class);
+
+    public ResponseEntity<String> delete(Long id) {
+        logger.info("Convenio Service Deleting convenio");
+        repository.deleteById(id);
+        return ResponseEntity.ok().body("{\"mensagem\": \"Excluido com sucesso!\"}");
+    }
 
     public List<ConvenioDtoResponse> findAll() {
+        logger.info("Convenio Service List All Convenios");
         List<ConvenioModel> convenios = repository.findAll();
-        return convenios.stream().map(convenio -> {
-            ConvenioDtoResponse dto = new ConvenioDtoResponse();
-            dto.setId(convenio.getId());
-            dto.setNome(convenio.getNome());
-            return dto;
-        }).collect(Collectors.toList());
+        return convenios.stream()
+                .map(convenio -> modelMapper.map(convenio, ConvenioDtoResponse.class))
+                .collect(Collectors.toList());
     }
 
     public ConvenioDtoResponse update(Long id, ConvenioDtoResponse convenioDtoResponse) {
+        logger.info("Convenio Service Updating Convenio");
         Optional<ConvenioModel> convenio = repository.findById(id);
-        if(convenio.isPresent()) {
+        if (convenio.isPresent()) {
             ConvenioModel convenioModel = convenio.get();
             convenioModel.setNome(convenioDtoResponse.getNome());
-            ConvenioModel convenios = repository.save(convenioModel);
-            ConvenioDtoResponse dto = new ConvenioDtoResponse();
-            dto.setId(id);
-            dto.setNome(convenioDtoResponse.getNome());
-            return dto;
+            logger.info("Convenio Service Updated");
+            ConvenioModel updatedConvenio = repository.save(convenioModel);
+            logger.info("Convenio Service Update Complete");
+            return modelMapper.map(updatedConvenio, ConvenioDtoResponse.class);
         } else {
             return null;
         }
     }
 
     public ConvenioDtoResponse save(ConvenioDtoRequest convenioDtoRequest) {
-        ConvenioModel convenioModel = new ConvenioModel();
-        convenioModel.setNome(convenioDtoRequest.getNome());
-        ConvenioModel convenios = repository.save(convenioModel);
-        ConvenioDtoResponse dto = new ConvenioDtoResponse();
-        dto.setId(convenios.getId());
-        dto.setNome(convenios.getNome());
-        return dto;
+        logger.info("Convenio Service Saving Convenio");
+        ConvenioModel convenioModel = modelMapper.map(convenioDtoRequest, ConvenioModel.class);
+        logger.info("Convenio Service Save Convenio");
+        ConvenioModel savedConvenio = repository.save(convenioModel);
+        return modelMapper.map(savedConvenio, ConvenioDtoResponse.class);
     }
 
     public ConvenioDtoResponse getById(Long id) {
+        logger.info("Convenio Service Getting by Id");
         Optional<ConvenioModel> convenio = repository.findById(id);
-        if(convenio.isPresent()) {
-            ConvenioDtoResponse dto = new ConvenioDtoResponse();
-            dto.setId(id);
-            dto.setNome(convenio.get().getNome());
-            return dto;
+        if (convenio.isPresent()) {
+            return modelMapper.map(convenio.get(), ConvenioDtoResponse.class);
         } else {
             return null;
         }

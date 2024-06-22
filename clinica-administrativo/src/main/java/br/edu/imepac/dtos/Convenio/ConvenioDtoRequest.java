@@ -1,4 +1,4 @@
-package br.edu.imepac.dtos;
+package br.edu.imepac.dtos.Convenio;
 
 import lombok.Data;
 

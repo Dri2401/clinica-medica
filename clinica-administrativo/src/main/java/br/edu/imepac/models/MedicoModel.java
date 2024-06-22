@@ -12,9 +12,16 @@ public class MedicoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false, unique = true)
     private String crm;
 
+    @Column(nullable = false)
     private String senha;
+
+    @ManyToOne
+    @JoinColumn(name = "especialidade_id", nullable = false)
+    private EspecialidadeModel especialidade;
 }

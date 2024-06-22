@@ -1,4 +1,4 @@
-package br.edu.imepac.dtos;
+package br.edu.imepac.dtos.Medico;
 
 import lombok.Data;
 
@@ -7,4 +7,5 @@ public class MedicoDtoRequest {
     private String nome;
     private String crm;
     private String senha;
+    private Long especialidadeId;
 }
