@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 public class EspecialidadeService {
     @Autowired
     private EspecialidadeRepository repo;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public void delete(Long id) {repo.deleteById(id);}
 
@@ -46,9 +48,9 @@ public class EspecialidadeService {
     }
 
     public EspecialidadeDtoResponse save(EspecialidadeDtoRequest dtoRequest) {
-        EspecialidadeModel especialidadeModel = modelMapper.map(EspecialidadeDtoRequest, EspecialidadeModel.class);
-        EspecialidadeModel savedEspecialidade = especialidadeRepository.save(especialidadeModel);
-        EspecialidadeDtoResponse especialidadeDto = modelMapper.map(savedMedico, MedicoDtoResponse.class);
+        EspecialidadeModel especialidadeModel = modelMapper.map(dtoRequest, EspecialidadeModel.class);
+        EspecialidadeModel savedEspecialidade = repo.save(especialidadeModel);
+        EspecialidadeDtoResponse especialidadeDto = modelMapper.map(savedEspecialidade, EspecialidadeDtoResponse.class);
         return especialidadeDto;
     }
 
