@@ -14,4 +14,7 @@ public class Prontuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    private Long pacienteId;
+    private String descricao;
+    
 }

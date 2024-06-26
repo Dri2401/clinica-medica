@@ -1,5 +1,7 @@
 package br.edu.imepac.models;
 
+import org.hibernate.mapping.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,5 +17,6 @@ public class Receituario {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)  
 private Long Id;
+private List medicamentos;
     
 }
