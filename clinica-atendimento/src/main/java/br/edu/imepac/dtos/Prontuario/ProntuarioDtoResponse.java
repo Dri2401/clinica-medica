@@ -6,7 +6,7 @@ import lombok.Data;
 public class ProntuarioDtoResponse {
     private Long Id;
 
-    private Long pacienteId;
+    private String pacienteNome;
 
     private String descricao;
     

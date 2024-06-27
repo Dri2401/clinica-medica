@@ -1,6 +1,7 @@
 package br.edu.imepac.dtos.Receituario;
 
-import org.hibernate.mapping.List;
+
+import java.util.List;
 
 import lombok.Data;
 

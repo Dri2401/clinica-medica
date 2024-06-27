@@ -6,7 +6,7 @@ import lombok.Data;
 public class RegistroAtendimentoDtoResponse {
     private Long Id;
 
-    private Long pacienteId;
+    private String pacienteNome;
 
     private String descricao;
     
