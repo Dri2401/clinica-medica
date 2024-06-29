@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.google.protobuf.Option;
-
 import br.edu.imepac.dtos.paciente.PacienteDtoRequest;
 import br.edu.imepac.dtos.paciente.PacienteDtoResponse;
 import br.edu.imepac.model.PacienteModel;

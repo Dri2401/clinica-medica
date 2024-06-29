@@ -56,6 +56,10 @@ public class MedicoService {
             Optional.ofNullable(medicoDetails.getNome()).ifPresent(medicoModel::setNome);
             Optional.ofNullable(medicoDetails.getCrm()).ifPresent(medicoModel::setCrm);
             Optional.ofNullable(medicoDetails.getSenha()).ifPresent(medicoModel::setSenha);
+            if(medicoDetails.getEspecialidade() != null){
+                Optional<EspecialidadeModel> optionalEspecialidade = especialidadeRepository.findById(medicoDetails.getEspecialidade());
+                optionalEspecialidade.ifPresent(medicoModel::setEspecialidade);
+            }
             logger.info("Medico Service update Medico");
             MedicoModel updatedMedico = medicoRepository.save(medicoModel);
             logger.info("Updated medico");
@@ -69,7 +73,7 @@ public class MedicoService {
 
     public MedicoDtoResponse save(MedicoDtoRequest medicoRequest) {
         MedicoModel medicoModel = modelMapper.map(medicoRequest, MedicoModel.class);
-        Optional<EspecialidadeModel> optionalEspecialidade = especialidadeRepository.findById(medicoRequest.getEspecialidadeId());
+        Optional<EspecialidadeModel> optionalEspecialidade = especialidadeRepository.findById(medicoRequest.getEspecialidade());
         if(optionalEspecialidade.isPresent()){
             logger.info("Medico Service Save Medico");
             EspecialidadeModel especialidade = optionalEspecialidade.get();
