@@ -1,5 +1,6 @@
 package br.edu.imepac.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -49,11 +50,18 @@ public class RetornoServices {
 
     public List<RetornoDtoResponse> findAll(){
         logger.info("Retorno Service Find All Retorno");
-        List<RetornoModel> retorno = retornoRepository.findAll();
-        List<RetornoDtoResponse> dto = retorno.stream()
-        .map(retono -> modelMapper.map(retono, RetornoDtoResponse.class))
-        .collect(Collectors.toList());
-        return dto;
+        List<RetornoModel> retornos = retornoRepository.findAll();
+        List<RetornoDtoResponse> dtos = new ArrayList<>();
+        for(RetornoModel retorno : retornos){
+            RetornoDtoResponse dto = modelMapper.map(retorno, RetornoDtoResponse.class);
+            if(retorno.getMedicoId()!= null){
+                Map<String, Object> medico = getMedicoById(retorno.getMedicoId());
+                String nomeMedico = (String) medico.get("nome");
+                dto.setMedicoNome(nomeMedico);
+            }
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     public RetornoDtoResponse update(Long id, RetornoDtoRequest retornoDetails){
@@ -66,12 +74,12 @@ public class RetornoServices {
             Optional.ofNullable(retornoDetails.getHorario()).ifPresent(retornoModel::setHorario);
             Optional.ofNullable(retornoDetails.getMedicoId()).ifPresent(retornoModel::setMedicoId);
             Optional.ofNullable(retornoDetails.getNomePaciente()).ifPresent(retornoModel::setNomePaciente);
-            Map<String, Object> medico = getMedicoById(id);
-            String medicoNome = (String) medico.get("nome");
             logger.info("Retorno Service Start Update Retorno");
-            RetornoModel updatedretorno = retornoRepository.save(retornoModel);
+            RetornoModel updatedRetorno = retornoRepository.save(retornoModel);
             logger.info("Updated retorno");
-            RetornoDtoResponse dto = modelMapper.map(updatedretorno, RetornoDtoResponse.class);
+            Map<String, Object> medico = getMedicoById(updatedRetorno.getMedicoId());
+            String medicoNome = (String) medico.get("nome");
+            RetornoDtoResponse dto = modelMapper.map(updatedRetorno, RetornoDtoResponse.class);
             dto.setMedicoNome(medicoNome);
             return dto;
         } else {
@@ -86,6 +94,9 @@ public class RetornoServices {
         if(optionalretorno.isPresent()){
             RetornoModel retorno = optionalretorno.get();
             RetornoDtoResponse dto = modelMapper.map(retorno, RetornoDtoResponse.class);
+            Map<String, Object> medico = getMedicoById(retorno.getMedicoId());
+            String nome = (String) medico.get("nome");
+            dto.setMedicoNome(nome);
             return dto;
         } else{
             logger.error("Paciente Service findById. Paciente not found");

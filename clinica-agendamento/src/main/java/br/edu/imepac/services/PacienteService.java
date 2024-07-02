@@ -97,9 +97,13 @@ public class PacienteService {
         if(optionalPaciente.isPresent()){
             PacienteModel paciente = optionalPaciente.get();
             PacienteDtoResponse dto = modelMapper.map(paciente, PacienteDtoResponse.class);
-            Map<String, Object> convenio = getConvenioById(paciente.getConvenioId());
-            String convenioNome = (String) convenio.get("nome");
-            dto.setConvenioNome(convenioNome);
+            if(paciente.getConvenioId() != null){
+                Map<String, Object> convenio = getConvenioById(paciente.getConvenioId());
+                String convenioNome = (String) convenio.get("nome");
+                dto.setConvenioNome(convenioNome);
+            } else {
+                dto.setConvenioNome(null);
+            }
             return dto;
         } else{
             logger.error("Paciente Service findById. Paciente not found");

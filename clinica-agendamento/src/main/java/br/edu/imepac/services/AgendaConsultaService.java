@@ -1,5 +1,6 @@
 package br.edu.imepac.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,10 +51,17 @@ public class AgendaConsultaService {
     public List<AgendaConsultaDtoResponse> findAll(){
         logger.info("AgendaConsulta Service Find All AgendaConsulta");
         List<AgendaConsultaModel> agendaConsulta = agendaConsultaRepository.findAll();
-        List<AgendaConsultaDtoResponse> dto = agendaConsulta.stream()
-        .map(retono -> modelMapper.map(retono, AgendaConsultaDtoResponse.class))
-        .collect(Collectors.toList());
-        return dto;
+        List<AgendaConsultaDtoResponse> dtos = new ArrayList<>();
+        for(AgendaConsultaModel agenda : agendaConsulta){
+            AgendaConsultaDtoResponse dto = modelMapper.map(agenda, AgendaConsultaDtoResponse.class);
+            if(agenda.getMedicoID() != null){
+                Map<String, Object> medico = getMedicoById(agenda.getMedicoID());
+                String nomeMedico = (String) medico.get("nome");
+                dto.setMedicoNome(nomeMedico);
+            }
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     public AgendaConsultaDtoResponse update(Long id, AgendaConsultaDtoRequest agendaConsultaDetails){
@@ -85,7 +93,10 @@ public class AgendaConsultaService {
         Optional<AgendaConsultaModel> optionalAgendaConsulta = agendaConsultaRepository.findById(id);
         if(optionalAgendaConsulta.isPresent()){
             AgendaConsultaModel agendaConsulta = optionalAgendaConsulta.get();
+            Map<String, Object> medico = getMedicoById(agendaConsulta.getMedicoID());
+            String nomeMedico = (String) medico.get("nome");
             AgendaConsultaDtoResponse dto = modelMapper.map(agendaConsulta, AgendaConsultaDtoResponse.class);
+            dto.setMedicoNome(nomeMedico);
             return dto;
         } else{
             logger.error("Paciente Service findById. Paciente not found");
@@ -96,7 +107,7 @@ public class AgendaConsultaService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getMedicoById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http:localhost:8080/medico/" + id;
+        String url = "http://localhost:8080/medico/" + id;
         
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
