@@ -37,12 +37,10 @@ public class ReceituarioService {
     }
     public List<ReceituarioDtoResponse> findAll() {
         logger.info("Receituario Service List All Receituario");
-        List<Receituario> receituario = repository.findAll();
-        return receituario.stream()
-            .map(receituarios -> modelMapper.map(receituario, ReceituarioDtoResponse.class))
+        List<Receituario> receituarios = repository.findAll();
+        return receituarios.stream()
+            .map(receituario -> modelMapper.map(receituario, ReceituarioDtoResponse.class))
             .collect(Collectors.toList());
-
-
     }
 
     public ReceituarioDtoResponse update(Long Id, ReceituarioDtoRequest receituarioDtoRequest) {

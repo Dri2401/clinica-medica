@@ -30,7 +30,7 @@ public class RegistroAtendimentoController {
     public ResponseEntity<RegistroAtendimentoDtoResponse> saveRegistroAtendimento(@RequestBody RegistroAtendimentoDtoRequest registroAtendimento){
         RegistroAtendimentoDtoResponse dto = registroAtendimentoService.save(registroAtendimento);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
-   }
+   }  
     @GetMapping
     public ResponseEntity<List<RegistroAtendimentoDtoResponse>> listAllRegistroAtendimento(){
         List<RegistroAtendimentoDtoResponse> dto = registroAtendimentoService.findAll();

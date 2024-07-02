@@ -35,11 +35,10 @@ public class ExamesService {
     public List<ExamesDtoResponse> findAll() {
         logger.info("Exame Service List All Exames");
         List<Exames> exames = repository.findAll();
-        return exames.stream()
-            .map(exame -> modelMapper.map(exames, ExamesDtoResponse.class))
+        List<ExamesDtoResponse> dtos = exames.stream()
+            .map(exame -> modelMapper.map(exame, ExamesDtoResponse.class))
             .collect(Collectors.toList());
-
-
+        return dtos;
     }
 
     public ExamesDtoResponse update(Long Id, ExameDtoRequest examesDtoRequest) {

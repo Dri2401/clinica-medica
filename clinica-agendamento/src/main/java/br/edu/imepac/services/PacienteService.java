@@ -60,7 +60,7 @@ public class PacienteService {
                     dto.setConvenioNome(convenioNome);
                 }
             } else {
-                dto.setConvenioNome(null); // ou algum valor padrão, se preferir
+                dto.setConvenioNome(null);
             }
             dtos.add(dto);
         }

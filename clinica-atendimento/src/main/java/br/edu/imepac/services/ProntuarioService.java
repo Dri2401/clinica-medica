@@ -1,5 +1,6 @@
 package br.edu.imepac.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,11 +39,18 @@ public class ProntuarioService {
     }
     public List<ProntuarioDtoResponse> findAll() {
         logger.info("Prontuario Service List All Prontuario");
-        List<Prontuario> prontuario = repository.findAll();
-        return prontuario.stream()
-            .map(prontuarios -> modelMapper.map(prontuarios, ProntuarioDtoResponse.class))
-            .collect(Collectors.toList());
-
+        List<Prontuario> prontuarios = repository.findAll();
+        List<ProntuarioDtoResponse> dtos = new ArrayList<>();
+        for(Prontuario prontuario : prontuarios){
+            ProntuarioDtoResponse dto = modelMapper.map(prontuario, ProntuarioDtoResponse.class);
+            if(prontuario.getPacienteId() != null){
+                Map<String, Object> paciente = getPacienteById(prontuario.getPacienteId());
+                String nome = (String) paciente.get("nome");
+                dto.setPacienteNome(nome);
+            }
+            dtos.add(dto);
+        }
+        return dtos;
 
     }
 
@@ -56,7 +64,7 @@ public class ProntuarioService {
             prontuario.setPacienteId(prontuarioDtoRequest.getPacienteId());
             Prontuario updateProntuario = repository.save(prontuario);
             ProntuarioDtoResponse dto = modelMapper.map(updateProntuario, ProntuarioDtoResponse.class);
-            Map<String, Object> paciente = getPacienteById(prontuarioDtoRequest.getPacienteId());
+            Map<String, Object> paciente = getPacienteById(updateProntuario.getPacienteId());
             String nome = (String) paciente.get("nome");
             dto.setPacienteNome(nome);
             return dto;
@@ -72,13 +80,13 @@ public class ProntuarioService {
 
     }
     public ProntuarioDtoResponse getById(Long Id){
-    Optional<Prontuario> prontuario = repository.findById(Id);
-    if (prontuario.isPresent()) {
-        Prontuario prontuarios = prontuario.get();
-        Map<String, Object> paciente = getPacienteById(prontuarios.getPacienteId());
-        String nomePaciente = (String) paciente.get("nome");
-        ProntuarioDtoResponse prontuarioDto = modelMapper.map(prontuarios, ProntuarioDtoResponse.class);
-        prontuarioDto.setPacienteNome(nomePaciente);
+    Optional<Prontuario> optionalProntuario = repository.findById(Id);
+    if (optionalProntuario.isPresent()) {
+        Prontuario prontuario = optionalProntuario.get();
+        ProntuarioDtoResponse prontuarioDto = modelMapper.map(prontuario, ProntuarioDtoResponse.class);
+        Map<String, Object> paciente = getPacienteById(prontuario.getPacienteId());
+        String nome = (String) paciente.get("nome");
+        prontuarioDto.setPacienteNome(nome);
         return prontuarioDto;
         
     } else{

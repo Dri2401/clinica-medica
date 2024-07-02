@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping("convenio")
 @Tag(name = "Convenio-API")
 public class ConvenioController {
+
     @Autowired
     private ConvenioService convenioService;
 
