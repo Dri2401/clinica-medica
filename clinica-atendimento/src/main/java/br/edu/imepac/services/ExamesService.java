@@ -80,7 +80,7 @@ public class ExamesService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getMedicoById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/medicos/" + id;
+        String url = "http://localhost:8080/medico/" + id;
         
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);

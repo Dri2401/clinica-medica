@@ -51,7 +51,9 @@ public class ReceituarioService {
         if (optionalReceituario.isPresent()) {
             Receituario receituario = optionalReceituario.get();
             logger.info("Receituario Service Updated");
-            Receituario updateReceituario = repository. save(receituario);
+            List<String> newMedicamentos = receituarioDtoRequest.getMedicamentos();
+            receituario.setMedicamentos(newMedicamentos);
+            Receituario updateReceituario = repository.save(receituario);
             return modelMapper.map(updateReceituario, ReceituarioDtoResponse.class);
 
         } else{

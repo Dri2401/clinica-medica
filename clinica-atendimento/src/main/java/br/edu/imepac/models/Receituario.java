@@ -1,5 +1,6 @@
 package br.edu.imepac.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.Collate;
@@ -26,6 +27,6 @@ private Long Id;
 @ElementCollection
 @CollectionTable(name= "receituario_medicamentos",joinColumns = @JoinColumn(name= "receituario_id"))
 @Column(name= "medicamentos")
-private List<String> medicamentos;
+private List<String> medicamentos = new ArrayList<>();
     
 }

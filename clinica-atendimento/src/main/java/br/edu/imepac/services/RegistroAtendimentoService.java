@@ -53,8 +53,14 @@ public class RegistroAtendimentoService {
         if (optionalRegistroAtendimento.isPresent()) {
             RegistroAtendimento registroAtendimento = optionalRegistroAtendimento.get();
             logger.info("RegistroAtendimento Service Updated");
-            RegistroAtendimento updateRegistroAtendimento = repository. save(registroAtendimento);
-            return modelMapper.map(updateRegistroAtendimento, RegistroAtendimentoDtoResponse.class);
+            registroAtendimento.setDescricao(registroAtendimentoDtoRequest.getDescricao());
+            registroAtendimento.setPacienteId(registroAtendimentoDtoRequest.getPacienteId());
+            RegistroAtendimento updateRegistroAtendimento = repository.save(registroAtendimento);
+            Map<String, Object> paciente = getPacienteById(registroAtendimentoDtoRequest.getPacienteId());
+            String nome = (String) paciente.get("nome");
+            RegistroAtendimentoDtoResponse dto = modelMapper.map(updateRegistroAtendimento, RegistroAtendimentoDtoResponse.class);
+            dto.setPacienteNome(nome);
+            return dto;
 
         } else{
             return null;

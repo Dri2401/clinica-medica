@@ -52,8 +52,14 @@ public class ProntuarioService {
         if (optionalProntuario.isPresent()) {
             Prontuario prontuario = optionalProntuario.get();
             logger.info("Prontuario Service Updated");
-            Prontuario updateProntuario = repository. save(prontuario);
-            return modelMapper.map(updateProntuario, ProntuarioDtoResponse.class);
+            prontuario.setDescricao(prontuarioDtoRequest.getDescricao());
+            prontuario.setPacienteId(prontuarioDtoRequest.getPacienteId());
+            Prontuario updateProntuario = repository.save(prontuario);
+            ProntuarioDtoResponse dto = modelMapper.map(updateProntuario, ProntuarioDtoResponse.class);
+            Map<String, Object> paciente = getPacienteById(prontuarioDtoRequest.getPacienteId());
+            String nome = (String) paciente.get("nome");
+            dto.setPacienteNome(nome);
+            return dto;
 
         } else{
             return null;
