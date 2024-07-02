@@ -9,7 +9,7 @@ import lombok.Data;
 public class ReceituarioDtoResponse {
     private Long Id;
 
-    private List medicamentos;
+    private List<String> medicamentos;
 
     
 }

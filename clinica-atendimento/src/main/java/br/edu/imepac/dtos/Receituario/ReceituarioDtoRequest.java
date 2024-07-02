@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReceituarioDtoRequest {
-    private List medicamentos;
+    private List<String> medicamentos;
     
     
 }
