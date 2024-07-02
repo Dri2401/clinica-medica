@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.edu.imepac.dtos.Prontuario.ProntuarioDtoRequest;
@@ -22,6 +23,7 @@ import br.edu.imepac.models.RegistroAtendimento;
 import br.edu.imepac.repositories.ProntuarioRepository;
 import br.edu.imepac.repositories.RegistroAtendimentoRepository;
 
+@Service
 public class RegistroAtendimentoService {
     
     @Autowired
@@ -82,7 +84,7 @@ public class RegistroAtendimentoService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getPacienteById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http:localhost:8081/paciente/" + id;
+        String url = "http://localhost:8081/pacientes/" + id;
         
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);

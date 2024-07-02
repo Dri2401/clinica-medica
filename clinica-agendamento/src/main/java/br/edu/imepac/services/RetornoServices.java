@@ -16,11 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.edu.imepac.dtos.Retorno.RetornoDtoRequest;
 import br.edu.imepac.dtos.Retorno.RetornoDtoResponse;
-import br.edu.imepac.dtos.paciente.PacienteDtoRequest;
-import br.edu.imepac.dtos.paciente.PacienteDtoResponse;
-import br.edu.imepac.model.PacienteModel;
 import br.edu.imepac.model.RetornoModel;
-import br.edu.imepac.repositories.PacienteRepository;
 import br.edu.imepac.repositories.RetornoRepository;
 
 @Service
@@ -100,7 +96,7 @@ public class RetornoServices {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getMedicoById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http:localhost:8080/medico/" + id;
+        String url = "http://localhost:8080/medico/" + id;
         
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);

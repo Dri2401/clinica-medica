@@ -83,7 +83,7 @@ public class ProntuarioService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getPacienteById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http:localhost:8081/paciente/" + id;
+        String url = "http://localhost:8081/pacientes/" + id;
         
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
