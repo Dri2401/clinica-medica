@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Clinica-Administrativo Swagger", version = "1", description = 
+@OpenAPIDefinition(info = @Info(title = "Clinica-Agendamento Swagger", version = "1", description = 
 "API desenvolvida para projeto acadêmico."))
 public class ClinicaAgendamento {
     public static void main(String[] args) {

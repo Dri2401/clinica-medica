@@ -6,5 +6,5 @@ import lombok.Data;
 public class PacienteDtoResponse {
     private Long id;
     private String nome;
-    private Long convenioId;
+    private String convenioNome;
 }
