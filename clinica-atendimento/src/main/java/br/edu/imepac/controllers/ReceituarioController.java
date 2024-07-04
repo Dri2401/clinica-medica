@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import br.edu.imepac.dtos.Receituario.ReceituarioDtoRequest;
 import br.edu.imepac.dtos.Receituario.ReceituarioDtoResponse;
 import br.edu.imepac.services.ReceituarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Controller
 @RequestMapping("receituario")
@@ -25,16 +28,35 @@ public class ReceituarioController {
     @Autowired
     private ReceituarioService receituarioService;
 
+    @Operation(summary = "Realiza o cadastro de entidades", method = "POST")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Cadastro de entidade realizado com sucesso!"),
+        @ApiResponse(responseCode = "400", description = "Erro na request feita pelo usuário"),
+        @ApiResponse(responseCode = "500", description = "Erro interno")
+    })
     @PostMapping
     public ResponseEntity<ReceituarioDtoResponse> saveReceituario(@RequestBody ReceituarioDtoRequest receituario){
         ReceituarioDtoResponse dto = receituarioService.save(receituario);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
    }
+
+    @Operation(summary = "Retorna todos as entidades cadastradas!", method = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Busca feita com sucesso"),
+        @ApiResponse(responseCode = "500", description = "Erro interno")
+    })
     @GetMapping
     public ResponseEntity<List<ReceituarioDtoResponse>> listAllReceituario(){
         List<ReceituarioDtoResponse> dto = receituarioService.findAll();
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @Operation(summary = "Retorna o dado de entidade pelo id", method = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Request feita com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Entidade não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno")
+    })
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ReceituarioDtoResponse> getReceituarioById(@PathVariable("id")Long id) {
@@ -47,6 +69,14 @@ public class ReceituarioController {
 
 
       }
+
+
+      @Operation(summary = "Atualiza os dados de uma entidade", method = "PUT")
+      @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Entidade atualizado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Entidade não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno")
+      })
       @PutMapping("/{id}")
       @ResponseStatus(HttpStatus.OK)
       public ResponseEntity<ReceituarioDtoResponse> updateReceituario(@PathVariable("id")Long id, @RequestBody ReceituarioDtoRequest receituarioDetails){
@@ -58,6 +88,12 @@ public class ReceituarioController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
       }
+
+      @Operation(summary = "Exclusão de uma entidade", method = "DELETE")
+      @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Entidade deletado com sucesso"),
+        @ApiResponse(responseCode = "500", description = "Erro interno")
+      })
       @DeleteMapping("/{id}")
       @ResponseStatus(HttpStatus.OK)
       public ResponseEntity<String> delete(@PathVariable("id")Long id){

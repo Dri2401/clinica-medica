@@ -21,13 +21,13 @@ import lombok.Data;
 @Table(name = "receituario")
 public class Receituario {
     
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)  
-private Long Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    private Long Id;
 
-@ElementCollection
-@CollectionTable(name= "receituario_medicamentos",joinColumns = @JoinColumn(name= "receituario_id"))
-@Column(name= "medicamentos")
-private List<String> medicamentos = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name= "receituario_medicamentos",joinColumns = @JoinColumn(name= "receituario_id"))
+    @Column(name= "medicamentos")
+    private List<String> medicamentos = new ArrayList<>();
     
 }

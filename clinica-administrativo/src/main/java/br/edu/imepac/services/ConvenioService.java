@@ -42,23 +42,15 @@ public class ConvenioService {
 
     public ConvenioDtoResponse update(Long id, ConvenioDtoResponse convenioDtoResponse) {
         logger.info("Convenio Service Updating Convenio");
-
         Optional<ConvenioModel> convenio = repository.findById(id);
-        
         if (convenio.isPresent()) {
             ConvenioModel convenioModel = convenio.get();
-            
             convenioModel.setNome(convenioDtoResponse.getNome());
-            
             logger.info("Convenio Service Updated");
-            
             ConvenioModel updatedConvenio = repository.save(convenioModel);
-            
             logger.info("Convenio Service Update Complete");
-            
             return modelMapper.map(updatedConvenio, ConvenioDtoResponse.class);
         } else {
-            
             return null;
         }
     }
